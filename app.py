@@ -18,12 +18,10 @@ app = Flask(__name__)
 bot = ChatBot(
     "DorkyG",
     storage_adapter="chatterbot.adapters.storage.MongoDatabaseAdapter",
-    logic_adapters=[
-        "chatterbot.adapters.logic.MathematicalEvaluation",
-        "chatterbot.adapters.logic.TimeLogicAdapter"
-    ],
     database='heroku_fwh6lbls',
     database_uri='mongodb://heroku_fwh6lbls:nliih3q5gka9m9aes92n0iksq3@ds061676.mlab.com:61676/heroku_fwh6lbls'
+    # database='local_mongodb',
+    # database_uri='127.0.0.1:27017'
 )
 bot.set_trainer(ChatterBotCorpusTrainer)
 bot.train("chatterbot.corpus.english")
@@ -48,6 +46,10 @@ def webhook():
     data = request.get_json()
 
     log(data) # you may not want to log every incoming message in production, but it's good for testing
+
+    # res = bot.get_response(str(data[unicode("message", "utf-8")]))
+    # log('response: ' + str(res))
+    # log("res logged")
 
     if data["object"] == "page":
 
