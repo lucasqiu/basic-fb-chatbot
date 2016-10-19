@@ -1,7 +1,6 @@
 import os
 import sys
 import json
-
 import requests
 from flask import Flask, request
 
@@ -16,21 +15,16 @@ app = Flask(__name__)
 # nltk.download('punkt')
 # print("punkt downloaded")
 
-# bot = ChatBot(
-#     "DorkyG",
-#     storage_adapter="chatterbot.adapters.storage.JsonFileStorageAdapter",
-#     input_adapter="chatterbot.adapters.input.TerminalAdapter",
-#     output_adapter="chatterbot.adapters.output.TerminalAdapter",
-#     logic_adapters=[
-#         "chatterbot.adapters.logic.MathematicalEvaluation",
-#         "chatterbot.adapters.logic.TimeLogicAdapter"
-#     ],
-#     database="./database.json"
-# )
-# bot.set_trainer(ChatterBotCorpusTrainer)
-# bot.train("chatterbot.corpus.english")
-
-bot = ChatBot("DorkyG")
+bot = ChatBot(
+    "DorkyG",
+    storage_adapter="chatterbot.adapters.storage.MongoDatabaseAdapter",
+    logic_adapters=[
+        "chatterbot.adapters.logic.MathematicalEvaluation",
+        "chatterbot.adapters.logic.TimeLogicAdapter"
+    ],
+    database='chatterbot-database',
+    database_uri='mongodb://heroku_fwh6lbls:nliih3q5gka9m9aes92n0iksq3@ds061676.mlab.com:61676/heroku_fwh6lbls'
+)
 bot.set_trainer(ChatterBotCorpusTrainer)
 bot.train("chatterbot.corpus.english")
 
