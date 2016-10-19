@@ -5,7 +5,34 @@ import json
 import requests
 from flask import Flask, request
 
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
+
+
 app = Flask(__name__)
+
+
+# print("Downloading punkt")
+# nltk.download('punkt')
+# print("punkt downloaded")
+
+# bot = ChatBot(
+#     "DorkyG",
+#     storage_adapter="chatterbot.adapters.storage.JsonFileStorageAdapter",
+#     input_adapter="chatterbot.adapters.input.TerminalAdapter",
+#     output_adapter="chatterbot.adapters.output.TerminalAdapter",
+#     logic_adapters=[
+#         "chatterbot.adapters.logic.MathematicalEvaluation",
+#         "chatterbot.adapters.logic.TimeLogicAdapter"
+#     ],
+#     database="./database.json"
+# )
+# bot.set_trainer(ChatterBotCorpusTrainer)
+# bot.train("chatterbot.corpus.english")
+
+bot = ChatBot("DorkyG")
+bot.set_trainer(ChatterBotCorpusTrainer)
+bot.train("chatterbot.corpus.english")
 
 
 @app.route('/', methods=['GET'])
@@ -24,9 +51,9 @@ def verify():
 def webhook():
 
     # endpoint for processing incoming messaging events
-
     data = request.get_json()
-    log(data)  # you may not want to log every incoming message in production, but it's good for testing
+
+    log(data) # you may not want to log every incoming message in production, but it's good for testing
 
     if data["object"] == "page":
 
@@ -39,7 +66,7 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
 
-                    send_message(sender_id, "got it, thanks!")
+                    send_message(sender_id, str(bot.get_response(message_text)))
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
