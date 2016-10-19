@@ -22,7 +22,7 @@ bot = ChatBot(
         "chatterbot.adapters.logic.MathematicalEvaluation",
         "chatterbot.adapters.logic.TimeLogicAdapter"
     ],
-    database='chatterbot-database',
+    database='heroku_fwh6lbls',
     database_uri='mongodb://heroku_fwh6lbls:nliih3q5gka9m9aes92n0iksq3@ds061676.mlab.com:61676/heroku_fwh6lbls'
 )
 bot.set_trainer(ChatterBotCorpusTrainer)
