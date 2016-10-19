@@ -25,6 +25,7 @@ bot = ChatBot(
 )
 bot.set_trainer(ChatterBotCorpusTrainer)
 bot.train("chatterbot.corpus.english")
+bot.train("chatterbot.corpus.chinese")
 
 
 @app.route('/', methods=['GET'])
@@ -47,9 +48,7 @@ def webhook():
 
     log(data) # you may not want to log every incoming message in production, but it's good for testing
 
-    # res = bot.get_response(str(data[unicode("message", "utf-8")]))
-    # log('response: ' + str(res))
-    # log("res logged")
+    # mtxt = data[u'message']
 
     if data["object"] == "page":
 
@@ -62,7 +61,7 @@ def webhook():
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
 
-                    response = str(bot.get_response(message_text))
+                    response = str(bot.get_response(message_text)).encode('utf-8')
 
                     log(response)
 
