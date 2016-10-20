@@ -1,4 +1,18 @@
-# Facebook Messenger Bot
-This is a simple python template that uses Flask to build a webhook for Facebook's Messenger Bot API.
+# basic-fb-chatbot
 
-Read more in my [tutorial that uses this repository](https://blog.hartleybrody.com/fb-messenger-bot/)
+A basic chat bot that can reply with English and Chinese semi-intelligently 
+
+It uses ChatterBot for data training. (https://github.com/gunthercox/ChatterBot)
+
+## Install & Run
+Make sure you have Python 2 installed.
+Download and run 
+```
+pip -r install requirements.txt
+```
+Then
+```
+python app.py
+```
+
+
